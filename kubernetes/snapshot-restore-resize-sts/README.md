@@ -32,13 +32,13 @@ This example shows you how to create a snapshot and restore an EBS `PersistentVo
 
 3. Validate the `PersistentVolumeClaim` is bound to your `PersistentVolume`.
     ```sh
-    % k get pods
+    % kubectl get pods
     NAME          READY   STATUS    RESTARTS   AGE
     cassandra-0   1/1     Running   0          33m
     cassandra-1   1/1     Running   0          32m
     cassandra-2   1/1     Running   0          30m
 
-    kg pv,pvc
+    kubectl get pv,pvc
     NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                STORAGECLASS   REASON   AGE
     persistentvolume/pvc-6d68170e-2e51-40f4-be52-430790684e51   2Gi        RWO            Delete           Bound    default/cassandra-data-cassandra-1   ebs-sc                  27m
     persistentvolume/pvc-b3ab4971-37dd-48d8-9f59-8c64bb65b2c8   2Gi        RWO            Delete           Bound    default/cassandra-data-cassandra-0   ebs-sc                  28m
@@ -55,7 +55,7 @@ This example shows you how to create a snapshot and restore an EBS `PersistentVo
     ```sh
     % for i in {0..2}
     do
-    k exec -it cassandra-$i -- lsblk
+    kubectl exec -it cassandra-$i -- lsblk
     done
     NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
     nvme0n1       259:0    0  80G  0 disk 
@@ -120,7 +120,7 @@ This example shows you how to create a snapshot and restore an EBS `PersistentVo
 
 8. Restore a volume from the snapshot with a `PersistentVolumeClaim` referencing the `VolumeSnapshot` in its `dataSource`:
     ```sh
-    k apply -f manifests/snapshot-restore/
+    kubectl apply -f manifests/snapshot-restore/
     persistentvolumeclaim/cassandra-data-cassandra-0 created
     persistentvolumeclaim/cassandra-data-cassandra-1 created
     persistentvolumeclaim/cassandra-data-cassandra-2 created
@@ -134,7 +134,7 @@ This example shows you how to create a snapshot and restore an EBS `PersistentVo
 
 9. Recreate the StatefulSet with the original manifest but with new desired storage size (4Gi). It will use the PVCs restored from the snapshot:
     ```sh
-    k apply -f manifests/app-restore/
+    kubectl apply -f manifests/app-restore/
     StatefulSet.apps/cassandra created
     % kubectl get pvc -w
     NAME                         STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE

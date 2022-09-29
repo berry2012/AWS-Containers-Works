@@ -81,7 +81,7 @@ spec:
           mountPath: /cassandra_data
   volumeClaimTemplates:
   - metadata:
-      name: cassandra-data            #PVC_TEMPLATE_NAME
+      name: cassandra-data            # PVC_TEMPLATE_NAME
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: ebs-sc
