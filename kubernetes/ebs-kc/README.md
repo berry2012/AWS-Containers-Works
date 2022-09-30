@@ -1,15 +1,15 @@
-# Volume Snapshots for StatefulSet
+# Pods Disaster Recovery with Volume Snapshots 
 
 ## Prerequisites
 
-1. Kubernetes 1.13+ (CSI 1.0).
+1. Kubernetes 1.19+ 
 2. The [aws-ebs-csi-driver](https://github.com/kubernetes-sigs/aws-ebs-csi-driver) installed.
 3. The [external snapshotter](https://github.com/kubernetes-csi/external-snapshotter) installed.
 4. The `VolumeSnapshotDataSource` is set in `--feature-gates=` in the `kube-apiserver` specification. This feature is enabled by default from Kubernetes v1.17+. 
 
 ## Usage
 
-This example shows you how to create a snapshot and restore an EBS `PersistentVolume` of StatefulSet.
+This sample involve how to create a snapshot, restore and resize an EBS `PersistentVolume` of Pods.
 
 
 ### Create Snapshot
@@ -81,7 +81,7 @@ This example shows you how to create a snapshot and restore an EBS `PersistentVo
     Tue Sep 27 17:06:44 UTC 2022
     ```
 
-10. Let's modify PVCs dynamically to reflect size in the StatefulSet:
+10. Let's modify PVCs dynamically to reflect size in the PodulSet:
     ```sh
 
     kubectl patch pvc appserver-recovery-claim -p '{ "spec": { "resources": { "requests": { "storage": "4Gi" }}}}'
