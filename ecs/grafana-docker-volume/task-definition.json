@@ -49,7 +49,7 @@
         }
     ],
     "memory": "512",
-    "taskRoleArn": "arn:aws:iam::520817024429:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::XXXXXXXXXXX:role/ecsTaskExecutionRole",
     "family": "grafana-docker-volume",
     "requiresCompatibilities": [
         "EC2"
