@@ -1,0 +1,76 @@
+{
+    "executionRoleArn": "arn:aws:iam::XXXXXXXX:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/grafana-docker-volume",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-create-group": "true",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "entryPoint": [],
+            "portMappings": [
+                {
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "containerPort": 3000
+                }
+            ],
+            "command": [],
+            "linuxParameters": {
+                "initProcessEnabled": true
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "GF_INSTALL_PLUGINS",
+                    "value": "grafana-clock-panel,grafana-simple-json-datasource"
+                },
+                {
+                    "name": "GF_SECURITY_ADMIN_PASSWORD",
+                    "value": "XXXXXXXXXXX"
+                }
+            ],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/var/lib/grafana",
+                    "sourceVolume": "grafana"
+                }
+            ],
+            "volumesFrom": [],
+            "image": "grafana/grafana",
+            "essential": true,
+            "name": "grafana"
+        }
+    ],
+    "memory": "512",
+    "taskRoleArn": "arn:aws:iam::520817024429:role/ecsTaskExecutionRole",
+    "family": "grafana-docker-volume",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX"
+    },
+    "cpu": "256",
+    "inferenceAccelerators": [],
+    "volumes": [
+        {
+            "name": "grafana",
+            "host": null,
+            "dockerVolumeConfiguration": {
+                "autoprovision": true,
+                "scope": "shared",
+                "driver": "local"
+            }
+        }
+    ],
+    "placementConstraints": [],
+    "tags": []
+}
